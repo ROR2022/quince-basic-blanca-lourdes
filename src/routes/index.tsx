@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { InvitationExperience } from "@/components/invitation/invitation-experience";
+import { resolveInvitationGuest } from "@/lib/guest-function";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    id: typeof search.id === "string" ? search.id : undefined,
+  }),
+  loaderDeps: ({ search }) => ({ id: search.id }),
+  loader: ({ deps }) => resolveInvitationGuest({ data: deps.id ?? "" }),
   head: () => ({
     meta: [
       { title: "Mis XV años de Blanca Lourdes" },
@@ -22,5 +28,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  return <InvitationExperience guest={null} />;
+  const guest = Route.useLoaderData();
+  return <InvitationExperience guest={guest} />;
 }
