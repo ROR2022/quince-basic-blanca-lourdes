@@ -8,6 +8,7 @@ import { motion } from 'framer-motion'
 import { invitationConfig } from '@/lib/config'
 import { MagicalButterflies } from './magical-butterflies'
 import { SectionReveal } from './section-reveal'
+import { SvgLeaf, SvgRose } from './ornaments'
 
 /** Corona / tiara original en SVG. */
 function Tiara() {
@@ -16,14 +17,14 @@ function Tiara() {
       <path
         d="M6 46 L14 18 L28 34 L44 10 L60 34 L74 18 L82 46 Z"
         fill="var(--champagne)"
-        stroke="var(--slate)"
+        stroke="var(--rose)"
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
-      <path d="M6 46 H82" stroke="var(--slate)" strokeWidth="2.5" strokeLinecap="round" />
-      <circle cx="14" cy="16" r="3.5" fill="var(--sky)" stroke="var(--slate)" strokeWidth="1" />
-      <circle cx="44" cy="8" r="4" fill="var(--lavender)" stroke="var(--slate)" strokeWidth="1" />
-      <circle cx="74" cy="16" r="3.5" fill="var(--sage)" stroke="var(--slate)" strokeWidth="1" />
+      <path d="M6 46 H82" stroke="var(--rose)" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="14" cy="16" r="3.5" fill="var(--blush)" stroke="var(--rose)" strokeWidth="1" />
+      <circle cx="44" cy="8" r="4" fill="var(--lavender)" stroke="var(--rose)" strokeWidth="1" />
+      <circle cx="74" cy="16" r="3.5" fill="var(--sage)" stroke="var(--rose)" strokeWidth="1" />
       <circle cx="28" cy="36" r="2.5" fill="var(--ivory)" />
       <circle cx="60" cy="36" r="2.5" fill="var(--ivory)" />
     </svg>
@@ -32,17 +33,12 @@ function Tiara() {
 
 function CornerFlourish({ className }: { className: string }) {
   return (
-    <svg
-      viewBox="0 0 60 60"
-      className={`absolute h-14 w-14 text-champagne ${className}`}
-      aria-hidden="true"
-    >
-      <path
-        d="M2,2 Q30,6 30,30 Q6,30 2,2 Z M2,2 q20,-1 34,10"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
+    <svg viewBox="0 0 60 60" className={`absolute h-16 w-16 ${className}`} aria-hidden="true">
+      <path d="M4,4 Q30,6 34,30 M4,4 Q6,30 30,34" fill="none" stroke="var(--champagne)" strokeWidth="1.2" />
+      <SvgLeaf x={26} y={10} size={7} rotate={20} />
+      <SvgLeaf x={10} y={26} size={7} rotate={70} />
+      <SvgRose x={14} y={14} r={8} color="var(--rose-soft)" />
+      <SvgRose x={28} y={24} r={5} color="var(--blush)" />
     </svg>
   )
 }
@@ -61,8 +57,8 @@ export function PremiumInvitation() {
         className="relative mx-auto max-w-xl overflow-hidden rounded-2xl border-2 border-champagne/70 px-8 py-12 text-center shadow-xl sm:px-14"
         style={{
           background:
-            'radial-gradient(circle at 50% 0%, var(--ivory) 0%, var(--lavender) 55%, var(--sky) 100%)',
-          boxShadow: '0 20px 60px -20px rgba(52,67,84,0.2)',
+            'radial-gradient(circle at 50% 0%, var(--ivory) 0%, var(--petal) 55%, var(--blush) 100%)',
+          boxShadow: '0 20px 60px -20px color-mix(in oklab, var(--ink) 20%, transparent)',
         }}
       >
         {/* Brillos dorados en las esquinas */}
@@ -76,28 +72,28 @@ export function PremiumInvitation() {
         </div>
 
         {/* Iniciales decorativas */}
-        <div className="mt-4 font-script text-5xl text-slate">
+        <div className="mt-4 font-script text-5xl text-rose">
           {quinceanera.shortName.charAt(0)}
         </div>
 
         <p className="mt-6 font-serif text-lg leading-relaxed text-ink">
           Con la bendición de Dios y el amor de mis padres:
         </p>
-        <h4 className="mt-4 font-script text-3xl text-slate">
+        <h4 className="mt-4 font-script text-3xl text-rose">
           Mis Padres
         </h4>
         <div className="my-5 space-y-1 font-display text-lg uppercase tracking-wider text-ink">
           <p>{parents.first}</p>
-          <p className="text-sm text-slate">y</p>
+          <p className="text-sm text-rose">y</p>
           <p>{parents.second}</p>
         </div>
 
-        <h4 className="mt-4 font-script text-3xl text-slate">
+        <h4 className="mt-4 font-script text-3xl text-rose">
           Y de mis padrinos:
         </h4>
         <div className="my-5 space-y-1 font-display text-lg uppercase tracking-wider text-ink">
           <p>{godparents.godmother}</p>
-          <p className="text-sm text-slate">y</p>
+          <p className="text-sm text-rose">y</p>
           <p>{godparents.godfather}</p>
         </div>
 
@@ -106,7 +102,7 @@ export function PremiumInvitation() {
         </p>
 
         <div className="mx-auto mt-8 h-px w-32 bg-champagne/70" />
-        <p className="mt-4 font-script text-4xl text-slate">
+        <p className="mt-4 font-script text-4xl text-rose">
           {quinceanera.name}
         </p>
       </motion.article>

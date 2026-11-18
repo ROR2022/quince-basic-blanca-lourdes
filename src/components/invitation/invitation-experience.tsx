@@ -34,8 +34,7 @@ export function InvitationExperience({ guest }: InvitationExperienceProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  function handleEnter() {
-    setEntered(true)
+  function handleOpen() {
     const audio = audioRef.current
     if (audio) {
       audio.volume = 0.5
@@ -68,13 +67,14 @@ export function InvitationExperience({ guest }: InvitationExperienceProps) {
 
       <EntryPortal
         visible={!entered}
-        onEnter={handleEnter}
+        onOpen={handleOpen}
+        onEnter={() => setEntered(true)}
         guest={guest}
       />
 
       {entered && <MusicPlayer isPlaying={isPlaying} onToggle={toggleMusic} />}
 
-      <BasicHero />
+      <BasicHero revealed={entered} />
       <BasicCountdown />
       <PremiumInvitation />
       <BasicEventDetails />

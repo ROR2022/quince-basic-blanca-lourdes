@@ -10,6 +10,7 @@ import { type FormEvent, useState } from 'react'
 import { invitationConfig } from '@/lib/config'
 import { MagicalButterflies } from './magical-butterflies'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 interface RSVPData {
   name: string
@@ -64,7 +65,7 @@ function sendRSVPByWhatsApp(
 // Confeti multicolor con los tonos de la paleta de la invitación.
 function launchConfetti() {
   const styles = getComputedStyle(document.documentElement)
-  const colors = ['--slate', '--sky', '--sage', '--lavender', '--peach', '--champagne'].map(
+  const colors = ['--rose', '--rose-soft', '--blush', '--sage', '--lavender', '--peach', '--champagne'].map(
     (token) => styles.getPropertyValue(token).trim(),
   )
   confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 }, colors })
@@ -79,7 +80,7 @@ function launchConfetti() {
 }
 
 const inputClass =
-  'w-full rounded-xl border border-input bg-ivory/90 px-4 py-3 text-ink placeholder:text-slate backdrop-blur-sm transition-colors focus:border-slate focus:ring-2 focus:ring-slate/20 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-slate focus-visible:outline-offset-2'
+  'w-full rounded-xl border border-input bg-ivory/90 px-4 py-3 text-ink placeholder:text-rose backdrop-blur-sm transition-colors focus:border-rose focus:ring-2 focus:ring-rose/20 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-rose focus-visible:outline-offset-2'
 
 export function BasicAttendance({
   companionLimit,
@@ -163,19 +164,20 @@ export function BasicAttendance({
         <h2 className="text-center font-display text-2xl uppercase tracking-[0.2em] text-ink sm:text-3xl">
           Confirme su asistencia
         </h2>
-        <p className="mt-3 text-center font-serif text-lg text-slate">
+        <FloralDivider />
+        <p className="mt-3 text-center font-serif text-lg text-rose">
           Fecha límite para confirmar: {deadline}
         </p>
         {!hasConfirmationContact && (
           <p
-            className="mt-2 text-center text-sm text-slate"
+            className="mt-2 text-center text-sm text-rose"
             role="status"
           >
             El número de WhatsApp para confirmar se agregará próximamente.
           </p>
         )}
 
-        <div className="relative mt-10 overflow-hidden rounded-2xl border border-sky bg-sky/55 p-6 shadow-md backdrop-blur-md sm:p-8">
+        <div className="relative mt-10 overflow-hidden rounded-2xl border border-blush bg-petal/75 p-6 shadow-md backdrop-blur-md sm:p-8">
           <AnimatePresence mode="wait">
             {done ? (
               <motion.div
@@ -185,8 +187,8 @@ export function BasicAttendance({
                 className="relative flex flex-col items-center py-8 text-center"
               >
                 <MagicalButterflies count={4} />
-                <CheckCircle2 className="h-14 w-14 text-slate" aria-hidden="true" />
-                <p className="mt-4 font-script text-4xl text-slate">
+                <CheckCircle2 className="h-14 w-14 text-rose" aria-hidden="true" />
+                <p className="mt-4 font-script text-4xl text-rose">
                   ¡Gracias!
                 </p>
                 <p className="mt-2 font-serif text-lg text-ink">
@@ -194,7 +196,7 @@ export function BasicAttendance({
                     ? `Nos encantará celebrar con usted, ${form.name.split(' ')[0]}.`
                     : 'Gracias por avisarnos. Le extrañaremos.'}
                 </p>
-                <p className="mt-2 text-sm text-slate">
+                <p className="mt-2 text-sm text-rose">
                   Se abrió WhatsApp con tu confirmación: solo falta que la envíes.
                 </p>
               </motion.div>
@@ -242,8 +244,8 @@ export function BasicAttendance({
                         }
                         className={`rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
                           form.attending === opt.value
-                            ? 'border-slate bg-lavender/70 text-ink'
-                            : 'border-input bg-ivory/90 text-slate hover:border-slate/60'
+                            ? 'border-rose bg-lavender/70 text-ink'
+                            : 'border-input bg-ivory/90 text-rose hover:border-rose/60'
                         }`}
                       >
                         {opt.label}
@@ -304,7 +306,7 @@ export function BasicAttendance({
                       />
                     </div>
                   ) : (
-                    <p className="text-sm text-slate">
+                    <p className="text-sm text-rose">
                       Esta invitación no incluye pases adicionales.
                     </p>
                   ))}
@@ -332,7 +334,7 @@ export function BasicAttendance({
                 <button
                   type="submit"
                   disabled={!hasConfirmationContact}
-                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-slate px-6 py-3 font-display text-sm uppercase tracking-[0.15em] text-ivory transition-transform hover:scale-[1.02] hover:bg-slate-hover disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-rose px-6 py-3 font-display text-sm uppercase tracking-[0.15em] text-ivory transition-transform hover:scale-[1.02] hover:bg-rose-deep disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Sparkles className="h-4 w-4" aria-hidden="true" />
                   Confirmar asistencia

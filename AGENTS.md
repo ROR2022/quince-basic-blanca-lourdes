@@ -32,4 +32,6 @@ use the editor.
 <!-- AGENT-MEMORY:BEGIN -->
 - Invitation content (names, dates, venue, contacts) lives in `src/lib/config.ts`; sections in `src/components/invitation/` read from it — edit config, not components, for content changes. Why: single source of truth ported from the original Next.js repo.
 - Web fonts load via Google Fonts `<link>` in `src/routes/__root.tsx` and map to `--font-*` tokens in `src/styles.css`. Why: Tailwind v4 cannot @import remote CSS.
+- Shared decorative SVGs (roses, leaves, sparkles, floral divider) live in `src/components/invitation/ornaments.tsx`; reuse them instead of drawing new ones per section. Why: keeps the floral style consistent.
+- The entry envelope calls `onOpen` on click (starts music inside the user gesture) and `onEnter` after its animation. Why: browsers block audio started outside a gesture.
 <!-- AGENT-MEMORY:END -->

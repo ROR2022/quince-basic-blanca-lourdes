@@ -9,6 +9,7 @@ import { Heart, Star } from 'lucide-react'
 import { invitationConfig } from '@/lib/config'
 import { EnvelopeRain } from './envelope-rain'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 /** Sobre decorativo original con sello de cera. */
 function DecorativeEnvelope() {
@@ -23,8 +24,8 @@ function DecorativeEnvelope() {
       <div
         className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
         style={{
-          background: 'radial-gradient(circle at 35% 30%, var(--slate), var(--slate-hover))',
-          boxShadow: '0 4px 10px rgba(52,67,84,0.22)',
+          background: 'radial-gradient(circle at 35% 30%, var(--rose), var(--rose-deep))',
+          boxShadow: '0 4px 10px color-mix(in oklab, var(--ink) 22%, transparent)',
         }}
       >
         <Heart className="h-6 w-6 text-ivory" fill="currentColor" aria-hidden="true" />
@@ -49,13 +50,14 @@ export function BasicGiftOptions() {
           {/* Sobres descendiendo + estrellas doradas */}
           <EnvelopeRain count={9} />
           <Star className="absolute left-6 top-6 h-4 w-4 text-champagne" fill="currentColor" aria-hidden="true" />
-          <Star className="absolute right-8 top-10 h-3 w-3 text-slate" fill="currentColor" aria-hidden="true" />
+          <Star className="absolute right-8 top-10 h-3 w-3 text-rose" fill="currentColor" aria-hidden="true" />
           <Star className="absolute bottom-8 left-10 h-3 w-3 text-sage" fill="currentColor" aria-hidden="true" />
 
           <div className="relative z-10">
             <h2 className="font-display text-2xl uppercase tracking-[0.2em] text-ink sm:text-3xl">
               {gifts.title}
             </h2>
+            <FloralDivider />
 
             <div className="mt-8">
               <DecorativeEnvelope />
@@ -64,7 +66,7 @@ export function BasicGiftOptions() {
             <p className="mx-auto mt-8 max-w-md text-pretty font-serif text-lg leading-relaxed text-ink">
               {gifts.message}
             </p>
-            <p className="mx-auto mt-4 max-w-md text-pretty font-serif text-base leading-relaxed text-slate">
+            <p className="mx-auto mt-4 max-w-md text-pretty font-serif text-base leading-relaxed text-rose">
               {gifts.instructions}
             </p>
           </div>

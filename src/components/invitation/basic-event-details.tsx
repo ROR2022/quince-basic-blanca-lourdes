@@ -3,6 +3,7 @@ import { Clock, MapPin, PartyPopper } from 'lucide-react'
 import { invitationConfig } from '@/lib/config'
 import { FloatingBlossoms } from './floating-blossoms'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 export function BasicEventDetails() {
   const { event, reception } = invitationConfig
@@ -14,8 +15,9 @@ export function BasicEventDetails() {
         <h2 className="text-center font-display text-2xl uppercase tracking-[0.2em] text-ink sm:text-3xl">
           Recepción
         </h2>
+        <FloralDivider />
 
-        <div className="mt-10 rounded-2xl border border-sky bg-sky/75 p-6 shadow-md backdrop-blur-md sm:p-8">
+        <div className="mt-10 rounded-2xl border border-blush bg-blush/55 p-6 shadow-md backdrop-blur-md sm:p-8">
           <div className="flex items-center gap-3 text-ink">
             <PartyPopper className="h-6 w-6" aria-hidden="true" />
             <h3 className="font-display text-xl uppercase tracking-[0.15em]">
@@ -31,7 +33,7 @@ export function BasicEventDetails() {
             </span>
           </div>
 
-          <div className="mt-3 flex items-start gap-2 text-sm text-slate">
+          <div className="mt-3 flex items-start gap-2 text-sm text-rose">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>{reception.address}</span>
           </div>
@@ -41,7 +43,7 @@ export function BasicEventDetails() {
               href={reception.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-slate px-4 py-2 text-sm font-medium text-ivory transition-transform hover:scale-105 hover:bg-slate-hover"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-rose px-4 py-2 text-sm font-medium text-ivory transition-transform hover:scale-105 hover:bg-rose-deep"
             >
               <MapPin className="h-4 w-4" aria-hidden="true" />
               Ver ubicación

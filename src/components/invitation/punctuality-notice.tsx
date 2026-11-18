@@ -1,6 +1,7 @@
 
 import { Clock3 } from 'lucide-react'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 export function PunctualityNotice() {
   return (
@@ -12,6 +13,7 @@ export function PunctualityNotice() {
             Su puntualidad es importante
           </h2>
         </div>
+        <FloralDivider />
         <p className="mx-auto mt-4 max-w-2xl text-pretty font-serif text-lg leading-relaxed text-ink">
           Le esperamos a partir de las 7:00 p. m. El evento dará inicio a las
           8:00 p. m. Agradecemos su puntualidad para compartir cada momento de

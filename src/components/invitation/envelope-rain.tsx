@@ -6,7 +6,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
-const SEAL_COLORS = ['var(--slate)', 'var(--champagne)', 'var(--sage)']
+const SEAL_COLORS = ['var(--rose)', 'var(--champagne)', 'var(--sage)']
 
 function EnvelopeIcon({ size, sealColor }: { size: number; sealColor: string }) {
   return (

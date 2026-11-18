@@ -23,8 +23,8 @@ export function MusicPlayer({ isPlaying, onToggle }: MusicPlayerProps) {
         aria-pressed={isPlaying}
         whileTap={{ scale: 0.9 }}
         whileHover={{ scale: 1.06 }}
-        className="flex h-14 w-14 items-center justify-center rounded-full border border-slate/50 bg-sky/95 text-slate shadow-lg backdrop-blur-md"
-        style={{ boxShadow: '0 0 20px 4px rgba(67,94,120,0.2)' }}
+        className="flex h-14 w-14 items-center justify-center rounded-full border border-rose/50 bg-petal/95 text-rose shadow-lg backdrop-blur-md"
+        style={{ boxShadow: '0 0 20px 4px color-mix(in oklab, var(--rose) 20%, transparent)' }}
       >
         <motion.span
           animate={isPlaying ? { rotate: 360 } : { rotate: 0 }}
@@ -38,7 +38,7 @@ export function MusicPlayer({ isPlaying, onToggle }: MusicPlayerProps) {
           {isPlaying ? <Pause className="h-6 w-6" /> : <Music className="h-6 w-6" />}
         </motion.span>
       </motion.button>
-      <span className="rounded-full bg-sky/95 px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-ink shadow backdrop-blur">
+      <span className="rounded-full bg-petal/95 px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-ink shadow backdrop-blur">
         Música
       </span>
     </div>

@@ -1,7 +1,7 @@
 
 /**
  * FloatingFireflies
- * Luciérnagas champagne, cielo y salvia que flotan con movimientos aleatorios.
+ * Luciérnagas champagne y rosadas que flotan con movimientos aleatorios.
  */
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -12,9 +12,9 @@ interface FloatingFirefliesProps {
 }
 
 const TONES = [
-  { className: 'bg-champagne', glow: 'rgba(212, 175, 122, 0.8)' },
-  { className: 'bg-sky', glow: 'rgba(215, 234, 244, 0.85)' },
-  { className: 'bg-sage', glow: 'rgba(220, 232, 213, 0.85)' },
+  { className: 'bg-champagne', glow: 'color-mix(in oklab, var(--champagne) 80%, transparent)' },
+  { className: 'bg-blush', glow: 'color-mix(in oklab, var(--blush) 85%, transparent)' },
+  { className: 'bg-rose-soft', glow: 'color-mix(in oklab, var(--rose-soft) 85%, transparent)' },
 ] as const
 
 export function FloatingFireflies({

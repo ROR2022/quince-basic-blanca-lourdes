@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { invitationConfig } from '@/lib/config'
 import { FloatingBlossoms } from './floating-blossoms'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 function getRemaining(target: number) {
   const diff = Math.max(0, target - Date.now())
@@ -45,7 +46,8 @@ export function BasicCountdown() {
         <h2 className="font-display text-2xl uppercase tracking-[0.2em] text-ink sm:text-3xl">
           Cuenta regresiva
         </h2>
-        <p className="mt-3 font-serif text-lg text-slate">
+        <FloralDivider />
+        <p className="mt-3 font-serif text-lg text-rose">
           Falta muy poco para una noche inolvidable
         </p>
 
@@ -53,13 +55,13 @@ export function BasicCountdown() {
           {(['days', 'hours', 'minutes', 'seconds'] as const).map((unit) => (
             <div
               key={unit}
-              className="rounded-2xl border border-sky bg-ivory/90 px-4 py-6 shadow-lg backdrop-blur-md"
-              style={{ boxShadow: 'inset 0 1px 0 rgba(255,248,242,0.8), 0 0 24px 2px rgba(67,94,120,0.1)' }}
+              className="rounded-2xl border border-blush bg-ivory/90 px-4 py-6 shadow-lg backdrop-blur-md"
+              style={{ boxShadow: 'inset 0 1px 0 color-mix(in oklab, var(--ivory) 80%, transparent), 0 0 24px 2px color-mix(in oklab, var(--rose) 10%, transparent)' }}
             >
               <div className="font-display text-4xl text-ink tabular-nums sm:text-5xl">
                 {String(time[unit]).padStart(2, '0')}
               </div>
-              <div className="mt-2 text-xs uppercase tracking-[0.2em] text-slate">
+              <div className="mt-2 text-xs uppercase tracking-[0.2em] text-rose">
                 {LABELS[unit]}
               </div>
             </div>

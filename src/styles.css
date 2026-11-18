@@ -27,8 +27,12 @@
   --color-peach: var(--peach);
   --color-champagne: var(--champagne);
   --color-ink: var(--ink);
-  --color-slate: var(--slate);
-  --color-slate-hover: var(--slate-hover);
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-rose-soft: var(--rose-soft);
+  --color-blush: var(--blush);
+  --color-petal: var(--petal);
+  --color-seal: var(--seal);
 
   /* Tokens semánticos */
   --color-background: var(--background);
@@ -60,15 +64,22 @@
 :root {
   color-scheme: light;
 
-  --ivory: oklch(0.983 0.011 63.4);
+  /* Rosa: color principal */
+  --rose: oklch(0.56 0.13 358);
+  --rose-deep: oklch(0.48 0.13 358);
+  --rose-soft: oklch(0.8 0.085 356);
+  --blush: oklch(0.9 0.045 355);
+  --petal: oklch(0.955 0.022 355);
+  --seal: oklch(0.5 0.15 2);
+
+  /* Pasteles de acompañamiento */
+  --ivory: oklch(0.985 0.01 40);
   --sky: oklch(0.926 0.024 230.4);
   --sage: oklch(0.917 0.028 133.7);
   --lavender: oklch(0.908 0.029 306);
   --peach: oklch(0.919 0.031 51.5);
   --champagne: oklch(0.775 0.082 76);
-  --ink: oklch(0.377 0.035 251.9);
-  --slate: oklch(0.471 0.053 248.1);
-  --slate-hover: oklch(0.411 0.049 248);
+  --ink: oklch(0.37 0.06 350);
 
   --radius: 0.75rem;
 
@@ -78,18 +89,29 @@
   --card-foreground: var(--ink);
   --popover: var(--ivory);
   --popover-foreground: var(--ink);
-  --primary: var(--slate);
+  --primary: var(--rose);
   --primary-foreground: var(--ivory);
-  --secondary: var(--sky);
+  --secondary: var(--blush);
   --secondary-foreground: var(--ink);
-  --muted: var(--sage);
+  --muted: var(--petal);
   --muted-foreground: var(--ink);
   --accent: var(--lavender);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.499 0.153 15.5);
-  --border: oklch(0.724 0.021 238.8);
-  --input: oklch(0.591 0.035 247);
-  --ring: var(--slate);
+  --border: oklch(0.82 0.05 355);
+  --input: oklch(0.68 0.07 355);
+  --ring: var(--rose);
+
+  /* Gradientes y sombras */
+  --gradient-sky: linear-gradient(180deg, var(--blush) 0%, var(--petal) 38%, var(--ivory) 70%, var(--petal) 100%);
+  --gradient-envelope: linear-gradient(160deg, oklch(0.93 0.04 355) 0%, oklch(0.88 0.055 355) 100%);
+  --gradient-envelope-flap: linear-gradient(180deg, oklch(0.9 0.05 355) 0%, oklch(0.85 0.065 356) 100%);
+  --gradient-envelope-inner: linear-gradient(180deg, oklch(0.78 0.08 356) 0%, oklch(0.86 0.06 355) 100%);
+  --gradient-paper: linear-gradient(180deg, var(--ivory) 0%, var(--petal) 100%);
+  --gradient-seal: radial-gradient(circle at 35% 30%, oklch(0.66 0.15 5) 0%, var(--seal) 55%, oklch(0.4 0.13 0) 100%);
+  --shadow-soft: 0 20px 60px -20px color-mix(in oklab, var(--rose-deep) 35%, transparent);
+  --shadow-envelope: 0 30px 60px -25px color-mix(in oklab, var(--rose-deep) 55%, transparent),
+    0 10px 20px -10px color-mix(in oklab, var(--ink) 25%, transparent);
 }
 
 @layer base {
@@ -98,10 +120,10 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
-    background: linear-gradient(180deg, var(--sky) 0%, var(--ivory) 42%, var(--ivory) 100%);
+    background: var(--gradient-sky);
   }
   :focus-visible {
-    outline: 2px solid var(--slate);
+    outline: 2px solid var(--rose);
     outline-offset: 3px;
   }
 
@@ -131,34 +153,34 @@
 /* Resplandor frío y suave alrededor de la ilustración de portada. */
 .quince-glow {
   box-shadow:
-    0 0 40px 8px oklch(0.926 0.024 230.4 / 0.65),
-    0 0 90px 24px oklch(0.917 0.028 133.7 / 0.42);
+    0 0 40px 8px color-mix(in oklab, var(--blush) 80%, transparent),
+    0 0 90px 24px color-mix(in oklab, var(--rose-soft) 35%, transparent);
 }
 
 /* Brillo azul tinta y pizarra para el nombre. */
 .name-shimmer {
   background: linear-gradient(
     100deg,
-    var(--ink) 0%,
-    var(--slate) 28%,
-    var(--ink) 46%,
-    var(--slate) 55%,
-    var(--ink) 72%,
-    var(--slate-hover) 100%
+    var(--rose-deep) 0%,
+    var(--rose) 25%,
+    color-mix(in oklab, var(--rose) 55%, var(--champagne)) 45%,
+    var(--rose) 60%,
+    var(--rose-deep) 80%,
+    var(--rose) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 6s linear infinite;
-  filter: drop-shadow(0 3px 5px oklch(0.377 0.035 251.9 / 0.2))
+  filter: drop-shadow(0 3px 5px color-mix(in oklab, var(--rose-deep) 25%, transparent))
     drop-shadow(0 0 14px oklch(0.775 0.082 76 / 0.2));
 }
 
 .guest-name {
   text-shadow:
     0 2px 0 oklch(0.983 0.011 63.4 / 0.9),
-    0 5px 16px oklch(0.377 0.035 251.9 / 0.18);
+    0 5px 16px color-mix(in oklab, var(--rose-deep) 22%, transparent);
 }
 
 @keyframes shimmer {
@@ -180,4 +202,88 @@
     transform: translateX(5%);
     opacity: 0.4;
   }
+}
+
+/* ===========================================================
+   SOBRE DE INVITACIÓN
+   =========================================================== */
+.envelope-body {
+  background: var(--gradient-envelope);
+  box-shadow: var(--shadow-envelope);
+}
+.envelope-inner {
+  background: var(--gradient-envelope-inner);
+}
+/* Forro con patrón floral sutil dentro del sobre */
+.envelope-liner {
+  background-color: var(--blush);
+  background-image:
+    radial-gradient(circle at 25% 25%, color-mix(in oklab, var(--rose-soft) 70%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle at 75% 75%, color-mix(in oklab, var(--champagne) 60%, transparent) 0 1.5px, transparent 2.5px);
+  background-size: 18px 18px;
+}
+.envelope-pocket-left {
+  background: linear-gradient(100deg, oklch(0.91 0.045 355) 0%, oklch(0.89 0.05 355) 100%);
+  clip-path: polygon(0 0, 52% 54%, 0 100%);
+}
+.envelope-pocket-right {
+  background: linear-gradient(260deg, oklch(0.91 0.045 355) 0%, oklch(0.89 0.05 355) 100%);
+  clip-path: polygon(100% 0, 48% 54%, 100% 100%);
+}
+.envelope-pocket-bottom {
+  background: linear-gradient(0deg, oklch(0.88 0.055 355) 0%, oklch(0.92 0.04 355) 100%);
+  clip-path: polygon(0 100%, 50% 42%, 100% 100%);
+  filter: drop-shadow(0 -2px 3px color-mix(in oklab, var(--rose-deep) 15%, transparent));
+}
+.envelope-flap {
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: var(--gradient-envelope-flap);
+  transform-origin: top center;
+  backface-visibility: visible;
+}
+.envelope-paper {
+  background: var(--gradient-paper);
+  box-shadow: 0 6px 18px -8px color-mix(in oklab, var(--rose-deep) 40%, transparent);
+}
+.wax-seal {
+  background: var(--gradient-seal);
+  box-shadow:
+    inset 0 2px 4px color-mix(in oklab, var(--ivory) 35%, transparent),
+    inset 0 -3px 6px color-mix(in oklab, var(--ink) 35%, transparent),
+    0 4px 10px color-mix(in oklab, var(--rose-deep) 45%, transparent);
+}
+.wax-seal-ring {
+  border: 1.5px dashed color-mix(in oklab, var(--champagne) 80%, transparent);
+}
+.seal-text {
+  color: var(--champagne);
+  text-shadow: 0 1px 1px color-mix(in oklab, var(--ink) 45%, transparent);
+}
+
+/* Botón principal rosa con brillo */
+.btn-rose {
+  background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+  color: var(--ivory);
+  box-shadow: 0 10px 30px -8px color-mix(in oklab, var(--rose) 70%, transparent);
+}
+.btn-rose::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, var(--ivory) 45%, transparent) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: sheen 3.2s ease-in-out infinite;
+}
+@keyframes sheen {
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+/* Halo pulsante del sello */
+@keyframes seal-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--rose) 45%, transparent); }
+  50% { box-shadow: 0 0 0 14px color-mix(in oklab, var(--rose) 0%, transparent); }
+}
+.seal-pulse {
+  animation: seal-pulse 2.4s ease-in-out infinite;
 }

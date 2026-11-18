@@ -2,7 +2,7 @@
 /**
  * MagicalButterflies
  * Mariposas luminosas que flotan por la pantalla.
- * Colores: azul cielo, salvia, lavanda, durazno y champagne.
+ * Colores: rosa, salvia, lavanda, durazno y champagne.
  */
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
@@ -13,7 +13,8 @@ interface MagicalButterfliesProps {
 }
 
 const WING_COLORS = [
-  'var(--sky)',
+  'var(--rose-soft)',
+  'var(--blush)',
   'var(--sage)',
   'var(--lavender)',
   'var(--peach)',
@@ -42,7 +43,7 @@ function Butterfly({ color, size }: { color: string; size: number }) {
         style={{ transformOrigin: '16px 16px' }}
       />
       {/* Cuerpo */}
-      <rect x="15.2" y="10" width="1.6" height="12" rx="0.8" fill="var(--slate)" />
+      <rect x="15.2" y="10" width="1.6" height="12" rx="0.8" fill="var(--rose)" />
     </svg>
   )
 }

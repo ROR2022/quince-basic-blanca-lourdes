@@ -8,6 +8,7 @@ import { Sparkles } from 'lucide-react'
 import { guestColorPalette, invitationConfig } from '@/lib/config'
 import { MagicalButterflies } from './magical-butterflies'
 import { SectionReveal } from './section-reveal'
+import { FloralDivider } from './ornaments'
 
 export function DressCode() {
   const { event } = invitationConfig
@@ -19,13 +20,14 @@ export function DressCode() {
         <h2 className="font-display text-2xl uppercase tracking-[0.2em] text-ink sm:text-3xl">
           Código de vestimenta
         </h2>
+        <FloralDivider />
         <p className="mt-4 font-serif text-2xl text-ink">
           {event.dressCode}
         </p>
 
         {/* Aviso destacado: rosa reservado a la quinceañera */}
         <div className="mx-auto mt-8 max-w-xl rounded-2xl border border-lavender bg-lavender/60 px-6 py-5">
-          <div className="flex items-center justify-center gap-2 text-slate">
+          <div className="flex items-center justify-center gap-2 text-rose">
             <Sparkles className="h-5 w-5" aria-hidden="true" />
             <span className="text-xs font-semibold uppercase tracking-[0.2em]">
               Nota importante
@@ -48,7 +50,7 @@ export function DressCode() {
                 style={{ backgroundColor: color.hex }}
                 aria-hidden="true"
               />
-              <span className="text-center text-[11px] leading-tight text-slate">
+              <span className="text-center text-[11px] leading-tight text-rose">
                 {color.name}
               </span>
             </div>
