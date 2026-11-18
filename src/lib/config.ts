@@ -16,17 +16,17 @@ export const invitationConfig = {
     rsvpDeadline: "2026-12-08",
   },
   parents: {
-    first: "Profe. Stalin Pérez De los Santos",
+    first: "Mtro. Stalin Pérez De los Santos",
     second: "Lic. Verónica del Carmen Gómez Garduza",
   } as const,
   godparents: {
-    godmother: "Profe. Mario Pérez Pérez",
+    godmother: "Mtro. Mario Pérez Pérez",
     godfather: "Sra. María Elsy De los Santos León",
   },
   reception: {
     name: "Palapa Roger",
-    address: "Cárdenas, Tabasco",
-    mapsUrl: "",
+    address: "86599, Av. Frontera 37, Secc 40, Cárdenas, Tab.",
+    mapsUrl: "https://maps.app.goo.gl/Dz8tjQkqUs7Ssb1j9",
   },
   gifts: {
     title: "Buzón de sueños",

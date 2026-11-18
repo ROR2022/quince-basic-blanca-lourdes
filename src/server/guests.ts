@@ -5,8 +5,9 @@ export interface GuestRecord {
   name: string;
   quantity: string;
   companionLimit: number | null;
-  type: "personal" | "family" | "unlimited" | "pending";
+  type: "personal" | "family" | "open-family" | "unlimited" | "pending";
   active: boolean;
+  maxAttendees?: number;
   issue?: string;
   sourceLine?: number;
 }
@@ -15,6 +16,7 @@ export interface PublicGuestInvitation {
   name: string;
   quantity: string;
   companionLimit: number | null;
+  maxAttendees?: number;
 }
 
 export const GENERIC_GUEST: PublicGuestInvitation = {
@@ -73,5 +75,11 @@ export function resolveGuestById(id: unknown): PublicGuestInvitation {
     name: record.name,
     quantity: quantity.quantity,
     companionLimit: quantity.companionLimit,
+    maxAttendees:
+      record.type === "open-family" &&
+      Number.isSafeInteger(record.maxAttendees) &&
+      (record.maxAttendees ?? 0) > 0
+        ? record.maxAttendees
+        : undefined,
   };
 }

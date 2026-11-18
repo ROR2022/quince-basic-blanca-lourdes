@@ -1,28 +1,29 @@
-
 /**
  * Formulario RSVP que abre WhatsApp con el mensaje preparado.
  * La invitación no registra respuestas en el sitio.
  */
-import confetti from 'canvas-confetti'
-import { AnimatePresence, motion } from 'framer-motion'
-import { CheckCircle2, Sparkles } from 'lucide-react'
-import { type FormEvent, useState } from 'react'
-import { invitationConfig } from '@/lib/config'
-import { MagicalButterflies } from './magical-butterflies'
-import { SectionReveal } from './section-reveal'
-import { FloralDivider } from './ornaments'
+import confetti from "canvas-confetti";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle2, Sparkles } from "lucide-react";
+import { type FormEvent, useEffect, useState } from "react";
+import { invitationConfig } from "@/lib/config";
+import { MagicalButterflies } from "./magical-butterflies";
+import { SectionReveal } from "./section-reveal";
+import { FloralDivider } from "./ornaments";
 
 interface RSVPData {
-  name: string
-  attending: 'yes' | 'no' | ''
-  guests: number
-  totalAttendees: number
-  message: string
+  name: string;
+  attending: "yes" | "no" | "";
+  guests: number;
+  totalAttendees: number;
+  message: string;
 }
 
 interface BasicAttendanceProps {
-  companionLimit: number | null
-  invitationLabel?: string | undefined
+  companionLimit: number | null;
+  invitationLabel?: string | undefined;
+  guestName?: string | undefined;
+  maxAttendees?: number | undefined;
 }
 
 function buildRSVPMessage(
@@ -34,17 +35,17 @@ function buildRSVPMessage(
     `Confirmación de asistencia - ${invitationConfig.quinceanera.name}`,
     ...(invitationLabel ? [`Invitación: ${invitationLabel}`] : []),
     `Nombre: ${data.name}`,
-    `Asistencia: ${data.attending === 'yes' ? 'Sí, asistiré' : 'No podré asistir'}`,
-  ]
-  if (data.attending === 'yes') {
+    `Asistencia: ${data.attending === "yes" ? "Sí, asistiré" : "No podré asistir"}`,
+  ];
+  if (data.attending === "yes") {
     lines.push(
       isUnlimited
         ? `Total de asistentes (incluida la persona que confirma): ${data.totalAttendees}`
         : `Acompañantes: ${data.guests}`,
-    )
+    );
   }
-  if (data.message) lines.push(`Mensaje: ${data.message}`)
-  return lines.join('\n')
+  if (data.message) lines.push(`Mensaje: ${data.message}`);
+  return lines.join("\n");
 }
 
 // Abre WhatsApp con el RSVP prellenado. El invitado debe presionar "Enviar" en la app.
@@ -53,108 +54,117 @@ function sendRSVPByWhatsApp(
   invitationLabel: string | undefined,
   isUnlimited: boolean,
 ): Window | null {
-  const number = invitationConfig.confirmationWhatsappNumber
-  if (!number) return null
+  const number = invitationConfig.confirmationWhatsappNumber;
+  if (!number) return null;
 
-  const text = encodeURIComponent(
-    buildRSVPMessage(data, invitationLabel, isUnlimited),
-  )
-  return window.open(`https://wa.me/${number}?text=${text}`, '_blank')
+  const text = encodeURIComponent(buildRSVPMessage(data, invitationLabel, isUnlimited));
+  return window.open(`https://wa.me/${number}?text=${text}`, "_blank");
 }
 
 // Confeti multicolor con los tonos de la paleta de la invitación.
 function launchConfetti() {
-  const styles = getComputedStyle(document.documentElement)
-  const colors = ['--rose', '--rose-soft', '--blush', '--sage', '--lavender', '--peach', '--champagne'].map(
-    (token) => styles.getPropertyValue(token).trim(),
-  )
-  confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 }, colors })
+  const styles = getComputedStyle(document.documentElement);
+  const colors = [
+    "--rose",
+    "--rose-soft",
+    "--blush",
+    "--sage",
+    "--lavender",
+    "--peach",
+    "--champagne",
+  ].map((token) => styles.getPropertyValue(token).trim());
+  confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 }, colors });
   setTimeout(
     () => confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0 }, colors }),
     200,
-  )
+  );
   setTimeout(
     () => confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 1 }, colors }),
     400,
-  )
+  );
 }
 
 const inputClass =
-  'w-full rounded-xl border border-input bg-ivory/90 px-4 py-3 text-ink placeholder:text-rose backdrop-blur-sm transition-colors focus:border-rose focus:ring-2 focus:ring-rose/20 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-rose focus-visible:outline-offset-2'
+  "w-full rounded-xl border border-input bg-ivory/90 px-4 py-3 text-ink placeholder:text-rose backdrop-blur-sm transition-colors focus:border-rose focus:ring-2 focus:ring-rose/20 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-rose focus-visible:outline-offset-2";
 
 export function BasicAttendance({
   companionLimit,
   invitationLabel,
+  guestName,
+  maxAttendees,
 }: BasicAttendanceProps) {
-  const { event, quinceanera } = invitationConfig
-  const hasConfirmationContact = Boolean(
-    invitationConfig.confirmationWhatsappNumber,
-  )
-  const deadline = new Date(event.rsvpDeadline).toLocaleDateString('es-MX', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  })
+  const { event, quinceanera } = invitationConfig;
+  const hasConfirmationContact = Boolean(invitationConfig.confirmationWhatsappNumber);
+  const deadline = new Date(event.rsvpDeadline).toLocaleDateString("es-MX", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
 
   const [form, setForm] = useState<RSVPData>({
-    name: '',
-    attending: '',
+    name: guestName ?? "",
+    attending: "",
     guests: 0,
     totalAttendees: 1,
-    message: '',
-  })
-  const [error, setError] = useState('')
-  const [done, setDone] = useState(false)
+    message: "",
+  });
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setForm((current) => ({
+      ...current,
+      name: guestName ?? "",
+    }));
+  }, [guestName]);
 
   function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
 
     if (!hasConfirmationContact) {
-      setError('La confirmación por WhatsApp estará disponible próximamente.')
-      return
+      setError("La confirmación por WhatsApp estará disponible próximamente.");
+      return;
     }
     // Validación básica
     if (!form.name.trim()) {
-      setError('Por favor escriba su nombre completo.')
-      return
+      setError("Por favor escriba su nombre completo.");
+      return;
     }
     if (!form.attending) {
-      setError('Indique si podrá asistir.')
-      return
+      setError("Indique si podrá asistir.");
+      return;
     }
     if (
-      form.attending === 'yes' &&
+      form.attending === "yes" &&
       companionLimit === null &&
       (!Number.isSafeInteger(form.totalAttendees) || form.totalAttendees < 1)
     ) {
-      setError('Indique un total válido de asistentes (número entero, mínimo 1).')
-      return
+      setError("Indique un total válido de asistentes (número entero, mínimo 1).");
+      return;
     }
     if (
-      form.attending === 'yes' &&
-      companionLimit !== null &&
-      form.guests > companionLimit
+      form.attending === "yes" &&
+      maxAttendees !== undefined &&
+      form.totalAttendees > maxAttendees
     ) {
-      setError(`Esta invitación permite hasta ${companionLimit} acompañantes.`)
-      return
+      setError(`Esta invitación permite un máximo de ${maxAttendees} asistentes.`);
+      return;
+    }
+    if (form.attending === "yes" && companionLimit !== null && form.guests > companionLimit) {
+      setError(`Esta invitación permite hasta ${companionLimit} acompañantes.`);
+      return;
     }
 
-    const popup = sendRSVPByWhatsApp(
-      form,
-      invitationLabel,
-      companionLimit === null,
-    )
+    const popup = sendRSVPByWhatsApp(form, invitationLabel, companionLimit === null);
     if (!popup) {
-      setError(
-        'No se pudo abrir WhatsApp. Permita las ventanas emergentes e inténtelo de nuevo.',
-      )
-      return
+      setError("No se pudo abrir WhatsApp. Permita las ventanas emergentes e inténtelo de nuevo.");
+      return;
     }
 
-    setDone(true)
-    if (form.attending === 'yes') launchConfetti()
+    setDone(true);
+    if (form.attending === "yes") launchConfetti();
   }
 
   return (
@@ -169,10 +179,7 @@ export function BasicAttendance({
           Fecha límite para confirmar: {deadline}
         </p>
         {!hasConfirmationContact && (
-          <p
-            className="mt-2 text-center text-sm text-rose"
-            role="status"
-          >
+          <p className="mt-2 text-center text-sm text-rose" role="status">
             El número de WhatsApp para confirmar se agregará próximamente.
           </p>
         )}
@@ -188,13 +195,11 @@ export function BasicAttendance({
               >
                 <MagicalButterflies count={4} />
                 <CheckCircle2 className="h-14 w-14 text-rose" aria-hidden="true" />
-                <p className="mt-4 font-script text-4xl text-rose">
-                  ¡Gracias!
-                </p>
+                <p className="mt-4 font-script text-4xl text-rose">¡Gracias!</p>
                 <p className="mt-2 font-serif text-lg text-ink">
-                  {form.attending === 'yes'
-                    ? `Nos encantará celebrar con usted, ${form.name.split(' ')[0]}.`
-                    : 'Gracias por avisarnos. Le extrañaremos.'}
+                  {form.attending === "yes"
+                    ? `Nos encantará celebrar con usted, ${form.name.split(" ")[0]}.`
+                    : "Gracias por avisarnos. Le extrañaremos."}
                 </p>
                 <p className="mt-2 text-sm text-rose">
                   Se abrió WhatsApp con tu confirmación: solo falta que la envíes.
@@ -216,19 +221,24 @@ export function BasicAttendance({
                   <input
                     id="rsvp-name"
                     type="text"
-                    className={inputClass}
+                    className={`${inputClass} cursor-not-allowed bg-blush/70 opacity-90`}
                     value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="Su nombre"
+                    readOnly
+                    aria-readonly="true"
+                    placeholder="Nombre asociado a la invitación"
                   />
                 </div>
 
                 <fieldset>
                   <legend className="mb-2 text-sm text-ink">¿Podrá asistir?</legend>
-                  <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="¿Podrá asistir?">
+                  <div
+                    className="grid grid-cols-2 gap-3"
+                    role="radiogroup"
+                    aria-label="¿Podrá asistir?"
+                  >
                     {[
-                      { value: 'yes', label: 'Sí, asistiré' },
-                      { value: 'no', label: 'No podré asistir' },
+                      { value: "yes", label: "Sí, asistiré" },
+                      { value: "no", label: "No podré asistir" },
                     ].map((opt) => (
                       <button
                         key={opt.value}
@@ -238,14 +248,14 @@ export function BasicAttendance({
                         onClick={() =>
                           setForm({
                             ...form,
-                            attending: opt.value as 'yes' | 'no',
-                            guests: opt.value === 'yes' ? form.guests : 0,
+                            attending: opt.value as "yes" | "no",
+                            guests: opt.value === "yes" ? form.guests : 0,
                           })
                         }
                         className={`rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
                           form.attending === opt.value
-                            ? 'border-rose bg-lavender/70 text-ink'
-                            : 'border-input bg-ivory/90 text-rose hover:border-rose/60'
+                            ? "border-rose bg-lavender/70 text-ink"
+                            : "border-input bg-ivory/90 text-rose hover:border-rose/60"
                         }`}
                       >
                         {opt.label}
@@ -254,16 +264,19 @@ export function BasicAttendance({
                   </div>
                 </fieldset>
 
-                {form.attending === 'yes' &&
+                {form.attending === "yes" &&
                   (companionLimit === null ? (
                     <div>
                       <label htmlFor="rsvp-total-attendees" className="mb-1 block text-sm text-ink">
-                        Número total de asistentes (incluyendo a quien confirma, sin límite asignado)
+                        {maxAttendees
+                          ? `Número total de asistentes (incluyendo a quien confirma, máximo ${maxAttendees})`
+                          : "Número total de asistentes (incluyendo a quien confirma, sin límite asignado)"}
                       </label>
                       <input
                         id="rsvp-total-attendees"
                         type="number"
                         min={1}
+                        max={maxAttendees}
                         step={1}
                         className={inputClass}
                         value={form.totalAttendees}
@@ -271,9 +284,7 @@ export function BasicAttendance({
                           setForm({
                             ...form,
                             totalAttendees:
-                              e.currentTarget.value === ''
-                                ? 0
-                                : Number(e.currentTarget.value),
+                              e.currentTarget.value === "" ? 0 : Number(e.currentTarget.value),
                           })
                         }
                       />
@@ -296,10 +307,7 @@ export function BasicAttendance({
                             ...form,
                             guests: Math.min(
                               companionLimit,
-                              Math.max(
-                                0,
-                                Math.trunc(Number(e.target.value) || 0),
-                              ),
+                              Math.max(0, Math.trunc(Number(e.target.value) || 0)),
                             ),
                           })
                         }
@@ -345,5 +353,5 @@ export function BasicAttendance({
         </div>
       </div>
     </SectionReveal>
-  )
+  );
 }

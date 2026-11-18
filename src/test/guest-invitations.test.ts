@@ -50,4 +50,13 @@ describe("guest id resolution", () => {
     expect(resolveGuestById(null)).toEqual(GENERIC_GUEST);
     expect(resolveGuestById(undefined)).toEqual(GENERIC_GUEST);
   });
+
+  it("resolves the open family pass with a maximum of 10 attendees", () => {
+    expect(resolveGuestById("WwIX4pMjEPYoCXaZ")).toEqual({
+      name: "Familiar",
+      quantity: "ilimitado",
+      companionLimit: null,
+      maxAttendees: 10,
+    });
+  });
 });

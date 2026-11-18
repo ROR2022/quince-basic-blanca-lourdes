@@ -108,7 +108,17 @@ function parseFamilyLines(text) {
 
 const personal = parsePersonalLines(fs.readFileSync(personalSource, "utf8"));
 const family = parseFamilyLines(fs.readFileSync(familySource, "utf8"));
-const records = [...personal, ...family];
+const records = [
+  ...personal,
+  ...family,
+  {
+    name: "Familiar",
+    quantity: "ilimitado",
+    companionLimit: null,
+    type: "open-family",
+    maxAttendees: 10,
+  },
+];
 const ids = new Set();
 
 const previousGuests = fs.existsSync(outputFile)
@@ -116,6 +126,7 @@ const previousGuests = fs.existsSync(outputFile)
   : [];
 const previousPersonal = previousGuests.filter((guest) => guest.type === "personal");
 const previousFamily = previousGuests.filter((guest) => guest.type === "family");
+const previousOpenFamily = previousGuests.find((guest) => guest.type === "open-family");
 
 const guests = records.map((record, recordIndex) => {
   let previous;
@@ -124,6 +135,8 @@ const guests = records.map((record, recordIndex) => {
     previous = previousPersonal[personalIndex];
   } else if (record.type === "family") {
     previous = previousFamily.find((guest) => guest.sourceLine === record.sourceLine);
+  } else if (record.type === "open-family") {
+    previous = previousOpenFamily;
   }
 
   const id = previous && /^[A-Za-z0-9]{16}$/.test(previous.id) ? previous.id : createId(ids);
@@ -138,6 +151,7 @@ const guests = records.map((record, recordIndex) => {
     quantity: record.quantity,
     companionLimit: record.companionLimit,
     type: record.type,
+    maxAttendees: record.maxAttendees,
     active: record.issue == null,
     issue: record.issue || undefined,
     sourceLine: record.sourceLine,

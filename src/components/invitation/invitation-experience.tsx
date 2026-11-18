@@ -1,61 +1,62 @@
-'use client'
+"use client";
 
 /**
  * Invitación web interactiva de XV años.
  * Ensambla las secciones y controla la música compartida.
  */
-import { useRef, useState } from 'react'
-import { BasicAttendance } from '@/components/invitation/basic-attendance'
-import { BasicCountdown } from '@/components/invitation/basic-countdown'
-import { BasicCTA } from '@/components/invitation/basic-cta'
-import { BasicEventDetails } from '@/components/invitation/basic-event-details'
-import { BasicGiftOptions } from '@/components/invitation/basic-gift-options'
-import { BasicHero } from '@/components/invitation/basic-hero'
-import { DressCode } from '@/components/invitation/dress-code'
-import { EnchantedBackground } from '@/components/invitation/enchanted-background'
-import { EntryPortal } from '@/components/invitation/entry-portal'
-import { Footer } from '@/components/invitation/footer'
-import { MusicPlayer } from '@/components/invitation/music-player'
-import { PremiumInvitation } from '@/components/invitation/premium-invitation'
-import { PunctualityNotice } from '@/components/invitation/punctuality-notice'
+import { useRef, useState } from "react";
+import { BasicAttendance } from "@/components/invitation/basic-attendance";
+import { BasicCountdown } from "@/components/invitation/basic-countdown";
+import { BasicCTA } from "@/components/invitation/basic-cta";
+import { BasicEventDetails } from "@/components/invitation/basic-event-details";
+import { BasicGiftOptions } from "@/components/invitation/basic-gift-options";
+import { BasicHero } from "@/components/invitation/basic-hero";
+import { DressCode } from "@/components/invitation/dress-code";
+import { EnchantedBackground } from "@/components/invitation/enchanted-background";
+import { EntryPortal } from "@/components/invitation/entry-portal";
+import { Footer } from "@/components/invitation/footer";
+import { MusicPlayer } from "@/components/invitation/music-player";
+import { PremiumInvitation } from "@/components/invitation/premium-invitation";
+import { PunctualityNotice } from "@/components/invitation/punctuality-notice";
 
 export interface GuestInvitation {
-  name: string
-  quantity: string
-  companionLimit: number | null
+  name: string;
+  quantity: string;
+  companionLimit: number | null;
+  maxAttendees?: number;
 }
 
 interface InvitationExperienceProps {
-  guest: GuestInvitation | null
+  guest: GuestInvitation | null;
 }
 
 export function InvitationExperience({ guest }: InvitationExperienceProps) {
-  const [entered, setEntered] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const [entered, setEntered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   function handleOpen() {
-    const audio = audioRef.current
+    const audio = audioRef.current;
     if (audio) {
-      audio.volume = 0.5
+      audio.volume = 0.5;
       audio
         .play()
         .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false))
+        .catch(() => setIsPlaying(false));
     }
   }
 
   function toggleMusic() {
-    const audio = audioRef.current
-    if (!audio) return
+    const audio = audioRef.current;
+    if (!audio) return;
     if (isPlaying) {
-      audio.pause()
-      setIsPlaying(false)
+      audio.pause();
+      setIsPlaying(false);
     } else {
       audio
         .play()
         .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false))
+        .catch(() => setIsPlaying(false));
     }
   }
 
@@ -82,13 +83,13 @@ export function InvitationExperience({ guest }: InvitationExperienceProps) {
       <DressCode />
       <BasicAttendance
         companionLimit={guest ? guest.companionLimit : null}
-        invitationLabel={
-          guest?.companionLimit === null ? guest.name : undefined
-        }
+        guestName={guest?.name}
+        maxAttendees={guest?.maxAttendees}
+        invitationLabel={guest?.companionLimit === null ? guest.name : undefined}
       />
       <BasicGiftOptions />
       <BasicCTA />
       <Footer />
     </main>
-  )
+  );
 }

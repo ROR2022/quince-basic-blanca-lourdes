@@ -1228,5 +1228,22 @@
     "type": "family",
     "active": true,
     "sourceLine": 55
+  },
+  {
+    "id": "5g0k1X6j7r8y2L9M",
+    "name": "Ing. Robles",
+    "quantity": "2 personas",
+    "companionLimit": 1,
+    "type": "family",
+    "active": true
+  },
+  {
+    "id": "WwIX4pMjEPYoCXaZ",
+    "name": "Familiar",
+    "quantity": "ilimitado",
+    "companionLimit": null,
+    "type": "open-family",
+    "maxAttendees": 10,
+    "active": true
   }
 ]

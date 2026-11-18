@@ -4,7 +4,7 @@ import { resolveInvitationGuest } from "@/lib/guest-function";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => ({
-    id: typeof search.id === "string" ? search.id : undefined,
+    id: typeof search["id"] === "string" ? search["id"] : undefined,
   }),
   loaderDeps: ({ search }) => ({ id: search.id }),
   loader: ({ deps }) => resolveInvitationGuest({ data: deps.id ?? "" }),
