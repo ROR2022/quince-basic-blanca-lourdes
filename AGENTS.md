@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+<!-- AGENT-MEMORY:BEGIN -->
+- Invitation content (names, dates, venue, contacts) lives in `src/lib/config.ts`; sections in `src/components/invitation/` read from it — edit config, not components, for content changes. Why: single source of truth ported from the original Next.js repo.
+- Web fonts load via Google Fonts `<link>` in `src/routes/__root.tsx` and map to `--font-*` tokens in `src/styles.css`. Why: Tailwind v4 cannot @import remote CSS.
+<!-- AGENT-MEMORY:END -->
