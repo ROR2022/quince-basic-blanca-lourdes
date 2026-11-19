@@ -77,7 +77,7 @@ export function PremiumInvitation() {
         </div>
 
         <p className="mt-6 font-serif text-lg leading-relaxed text-ink">
-          Con la bendición de Dios y el amor de mis padres:
+          Con la bendición y el amorde Dios:
         </p>
         <h4 className="mt-4 font-script text-3xl text-rose">
           Mis Padres
